@@ -1,0 +1,7 @@
+{
+  "name":"DuneHD JS API implementation",
+  "version": "0.1",
+  "id": "dunehd-plugin",
+    "roles": ["stbapi"],
+    "dependencies": ["datasource", "browser"]
+}

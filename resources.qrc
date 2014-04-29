@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/dunehd/js">
+        <file alias="dunehd.js">resources/dunedh.js</file>
+    </qresource>
+</RCC>
