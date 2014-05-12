@@ -35,7 +35,9 @@ unix {
 
 OTHER_FILES += \
     metadata.json \
-    resources/dunedh.js
+    resources/dunedh.js \
+    LICENSE \
+    README.md
 
 include(../common.pri)
 DESTDIR = $$DEFAULT_PLUGIN_DIR
