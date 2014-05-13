@@ -4,13 +4,14 @@
 #
 #-------------------------------------------------
 
+VERSION = 1.0.0
+
 QT       = core gui widgets
 
-CONFIG += C++11
+CONFIG += c++11
 
 TARGET = yasem-dunehd-api
 TEMPLATE = lib
-CONFIG += plugin
 
 DEFINES += DUNEAPI_LIBRARY
 
