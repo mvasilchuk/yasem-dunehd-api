@@ -52,7 +52,7 @@ void DuneProfile::start()
     profilePlugin->browser()->setInnerSize(portalSize);
 
     QString urlString = portal();
-    DEBUG(urlString);
+    DEBUG() << urlString;
     QUrl portalUrl = QUrl(urlString.replace("~", QDir::homePath()));
     profilePlugin->browser()->load(portalUrl);
 }

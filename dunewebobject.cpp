@@ -88,7 +88,7 @@ QString DuneWebObject::getGatewayAddress()
 
 int DuneWebObject::log(const QString message)
 {
-    STUB_WITH_PARAMS(message);
+    DEBUG() << message;
     return 0;
 }
 
@@ -106,19 +106,19 @@ int DuneWebObject::getStandbyMode()
 
 bool DuneWebObject::fileExists(const QString &path)
 {
-    STUB_WITH_PARAMS(path);
+    STUB() << path;
     return true;
 }
 
 QString DuneWebObject::getUserSetting(const QString &key)
 {
-    STUB_WITH_PARAMS(key);
+    STUB() << key;
     return profile->get(GROUP_USER, key);
 }
 
 int DuneWebObject::setUserSetting(const QString &key, const QString &value)
 {
-    STUB_WITH_LIST(QStringList() << key << value);
+    STUB() << key << value;
     return profile->set(QString("%1/%2").arg(GROUP_USER).arg(key), value);
 }
 
@@ -136,7 +136,7 @@ QString DuneWebObject::getFirmwareUpgradeVersion()
 
 int DuneWebObject::startFirmwareUpgrade(const QString &url, const QString &version)
 {
-    STUB_WITH_LIST(QStringList() << url << version);
+    STUB() << url << version;
     return 0;
 }
 
@@ -151,7 +151,7 @@ int DuneWebObject::startFirmwareUpgrade(const QString &url, const QString &versi
  */
 int DuneWebObject::resetSettings(int reset)
 {
-    STUB_WITH_PARAMS(reset);
+    STUB() << reset;
     return 0;
 }
 
@@ -164,7 +164,7 @@ int DuneWebObject::getPlaybackState()
 
 int DuneWebObject::play(const QString &mediaUrl)
 {
-    STUB_WITH_PARAMS(mediaUrl);
+    STUB() << mediaUrl;
     return 0;
 }
 
@@ -210,7 +210,7 @@ int DuneWebObject::resume()
  */
 int DuneWebObject::setInitialSpeed(int speed)
 {
-    STUB_WITH_PARAMS(speed);
+    STUB() << speed;
     return 0;
 }
 /**
@@ -250,7 +250,7 @@ int DuneWebObject::getSpeed()
  */
 int DuneWebObject::setSpeed(int speed)
 {
-    STUB_WITH_PARAMS(speed);
+    STUB() << speed;
     return 0;
 }
 
@@ -281,7 +281,7 @@ int DuneWebObject::getLengthInSeconds()
  */
 int DuneWebObject::setInitialPositionInSeconds(int seconds)
 {
-    STUB_WITH_PARAMS(seconds);
+    STUB() << seconds;
     return 0;
 }
 
@@ -302,7 +302,7 @@ int DuneWebObject::getPositionInSeconds()
  */
 int DuneWebObject::setPositionInSeconds(int seconds)
 {
-    STUB_WITH_PARAMS(seconds);
+    STUB() << seconds;
     return 0;
 }
 
@@ -321,7 +321,7 @@ int DuneWebObject::setPositionInSeconds(int seconds)
  */
 int DuneWebObject::setSpeedAndPositionInSeconds(int speed, int seconds)
 {
-    STUB_WITH_LIST(QStringList() << QString::number(speed) << QString::number(seconds));
+    STUB() << speed << seconds;
     return 0;
 }
 
@@ -344,7 +344,7 @@ int DuneWebObject::getVolume()
  */
 int DuneWebObject::setVolume(int volume)
 {
-    STUB_WITH_PARAMS(volume);
+    STUB() << volume;
     return 0;
 }
 
@@ -373,7 +373,7 @@ int DuneWebObject::disableMute()
  */
 int DuneWebObject::setInitialAudioPid(int pid)
 {
-    STUB_WITH_PARAMS(pid);
+    STUB() << pid;
     return 0;
 }
 
@@ -408,7 +408,7 @@ int DuneWebObject::getAudioTrack()
  */
 int DuneWebObject::setAudioTrack(int track)
 {
-    STUB_WITH_PARAMS(track);
+    STUB() << track;
     return 0;
 }
 
@@ -431,7 +431,7 @@ int DuneWebObject::getDigitalAudioOutput()
  */
 int DuneWebObject::setDigitalAudioOutput(int output)
 {
-    STUB_WITH_PARAMS(output);
+    STUB() << output;
     return 0;
 }
 
@@ -457,7 +457,7 @@ QString DuneWebObject::getDefaultAudioLanguage()
  */
 QString DuneWebObject::setDefaultAudioLanguage(const QString &language)
 {
-    STUB_WITH_PARAMS(language);
+    STUB() << language;
     return 0;
 }
 
@@ -494,7 +494,7 @@ int DuneWebObject::getSubtitleTrack()
  */
 int DuneWebObject::setSubtitleTrack(int track)
 {
-    STUB_WITH_PARAMS(track);
+    STUB() << track;
     return 0;
 }
 
@@ -532,7 +532,7 @@ int DuneWebObject::getTeletextPageNumber()
 
 int DuneWebObject::setTeletextPageNumber(int page)
 {
-    STUB_WITH_PARAMS(page);
+    STUB() << page;
     return 0;
 }
 
@@ -556,7 +556,7 @@ int DuneWebObject::disableTeletextMixMode()
 
 int DuneWebObject::inputTeletextKey(int key)
 {
-    STUB_WITH_PARAMS(key);
+    STUB() << key;
     return 0;
 }
 
@@ -577,7 +577,7 @@ int DuneWebObject::getColorKey()
 
 int DuneWebObject::setColorKey(int color)
 {
-    STUB_WITH_PARAMS(color);
+    STUB() << color;
     return OK;
 }
 
@@ -663,7 +663,7 @@ int DuneWebObject::getWindowRectHeight()
 
 int DuneWebObject::setWindowRect(int x, int y, int width, int height)
 {
-    STUB_WITH_LIST(QStringList() << QString::number(x) << QString::number(y) << QString::number(width) << QString::number(height));
+    STUB() << x << y << width << height;
     return 0;
 }
 
@@ -693,7 +693,7 @@ int DuneWebObject::getClipRectHeight()
 
 int DuneWebObject::setClipRect(int x, int y, int width, int height)
 {
-    STUB_WITH_LIST(QStringList() << QString::number(x) << QString::number(y) << QString::number(width) << QString::number(height));
+    STUB() << x << y << width << height;
     return 0;
 }
 
@@ -723,7 +723,7 @@ int DuneWebObject::getVideoConnector()
 
 int DuneWebObject::setVideoConnector(int connector)
 {
-    STUB_WITH_PARAMS(connector);
+    STUB() << connector;
     return OK;
 }
 
@@ -741,7 +741,7 @@ int DuneWebObject::getVideoMode()
 
 int DuneWebObject::setVideoMode(int mode)
 {
-    STUB_WITH_PARAMS(mode);
+    STUB() << mode;
     return OK;
 }
 
@@ -753,7 +753,7 @@ int DuneWebObject::getAspectRatio()
 
 int DuneWebObject::setAspectRatio(int ratio)
 {
-    STUB_WITH_PARAMS(ratio);
+    STUB() << ratio;
     return OK;
 }
 
@@ -765,7 +765,7 @@ int DuneWebObject::getVideoZoom()
 
 int DuneWebObject::setVideoZoom(int zoom)
 {
-    STUB_WITH_PARAMS(zoom);
+    STUB() << zoom;
     return OK;
 }
 
@@ -783,7 +783,7 @@ int DuneWebObject::getBrowserAlphaLevel()
 
 int DuneWebObject::setBrowserAlphaLevel(int level)
 {
-    STUB_WITH_PARAMS(level);
+    STUB() << level;
     return OK;
 }
 
@@ -795,7 +795,7 @@ int DuneWebObject::getScreenSize()
 
 int DuneWebObject::setScreenSize(int size)
 {
-    STUB_WITH_PARAMS(size);
+    STUB() << size;
     return OK;
 }
 
@@ -807,7 +807,7 @@ QString DuneWebObject::getHomePage()
 
 int DuneWebObject::exitBrowser(int mode)
 {
-    STUB_WITH_PARAMS(mode);
+    STUB() << mode;
     return EXIT_BROWSER_MODE_CLOSE;
 }
 
@@ -824,7 +824,7 @@ int DuneWebObject::launchNativeUi()
  */
 int DuneWebObject::launchNativeUi(const QString &returnUrl)
 {
-    STUB_WITH_PARAMS(returnUrl);
+    STUB() << returnUrl;
     return OK;
 }
 
@@ -841,7 +841,7 @@ int DuneWebObject::launchNativeUi(const QString &returnUrl)
  */
 int DuneWebObject::launchNativeUiExt(const QString &nativeUrl, const QString &returnUrl)
 {
-    STUB_WITH_LIST(QStringList() << nativeUrl << returnUrl);
+    STUB() << nativeUrl << returnUrl;
     return OK;
 }
 
@@ -867,13 +867,12 @@ QString DuneWebObject::getBrowserProxies()
 int DuneWebObject::setBrowserProxy(int type, const QString &host, int port, const QString &user,
                     const QString &password, const QString &exceptions)
 {
-   STUB_WITH_LIST(QStringList()
-                  << QString::number(type)
-                  << host
-                  << QString::number(port)
-                  << user
-                  << password
-                  << exceptions);
+   STUB() << type
+          << host
+          << port
+          << user
+          << password
+          << exceptions;
    return OK;
 }
 
@@ -900,7 +899,7 @@ int DuneWebObject::getRcAutoRepeatPeriod()
  */
 int DuneWebObject::setRcAutoRepeatPeriod(int period)
 {
-    STUB_WITH_PARAMS(period);
+    STUB() << period;
     return OK;
 }
 
@@ -926,7 +925,7 @@ QString DuneWebObject::getRcAutoRepeatKeys()
  */
 int DuneWebObject::setRcAutoRepeatKeys(int keys[])
 {
-    STUB();
+    STUB() << keys;
     return OK;
 }
 
@@ -947,7 +946,7 @@ Saves screenshot of specified screen area to BMP image file with
 
 int DuneWebObject::saveScreenshot(struct screenshotParameters params)
 {
-    STUB();
+    STUB();// << params;
     return OK;
 }
 
@@ -1009,6 +1008,7 @@ QString DuneWebObject::getMainStorageDescription()
 */
 int DuneWebObject::getFolderItemsNumber(const QString &mediaUrl)
 {
+    STUB() << mediaUrl;
     return 0;
 }
 /**
@@ -1061,7 +1061,7 @@ QString DuneWebObject::getFolderContent()
  */
 int DuneWebObject::setNetworkConfiguration(struct NetworkConfiguration config)
 {
-    STUB();
+    STUB();// << config;
     return OK;
 }
 
@@ -1111,7 +1111,7 @@ QString DuneWebObject::getNetworkConfiguration()
  */
 int DuneWebObject::scanForWifiNetworks(int timeout)
 {
-    STUB_WITH_PARAMS(timeout);
+    STUB() << timeout;
     return OK;
 }
 
@@ -1150,7 +1150,7 @@ int DuneWebObject::getTimeZone()
  */
 int DuneWebObject::setTimeZone(int zone)
 {
-    STUB_WITH_PARAMS(zone);
+    STUB() << zone;
     return OK;
 }
 
@@ -1162,6 +1162,7 @@ int DuneWebObject::getDaylightSavingTime()
 
 int DuneWebObject::setDaylightSavingTime(int time)
 {
+    STUB() << time;
     return OK;
 }
 
@@ -1222,7 +1223,7 @@ Retrieves EPG information from currently played TS stream. EPG is
  */
 QString DuneWebObject::getEpgFromMpegTsStream(const QString &serviceUrl, struct TimeRange timeRange)
 {
-    STUB();
+    STUB() << serviceUrl;// << timeRange;
     return "[]";
 }
 
@@ -1263,7 +1264,7 @@ int DuneWebObject::getChannelsNumber()
  */
 QString DuneWebObject::getChannelsDescription(int startIndex, int maxCount)
 {
-    STUB();
+    STUB() << startIndex << maxCount;
     return "[]";
 }
 
@@ -1271,7 +1272,7 @@ QString DuneWebObject::getChannelsDescription(int startIndex, int maxCount)
 
 int DuneWebObject::setPlaybackEventCallback(const QString &callback)
 {
-    STUB_WITH_PARAMS(callback);
+    STUB() << callback;
     return 0;
 }
 
