@@ -86,7 +86,7 @@ QString DuneWebObject::getGatewayAddress()
     return profile->get(GROUP_SYSTEM, GATEWAY_ADDRESS);
 }
 
-int DuneWebObject::log(const QString message)
+int DuneWebObject::log(const QString &message)
 {
     DEBUG() << message;
     return 0;

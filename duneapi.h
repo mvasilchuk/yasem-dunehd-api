@@ -22,8 +22,6 @@ class DUNEAPISHARED_EXPORT DuneAPI : public QObject, public virtual Plugin, publ
     Q_CLASSINFO("description", "DuneHD API implementation for YASEM")
 public:
 
-
-
     explicit DuneAPI();
 
 
@@ -45,6 +43,10 @@ protected:
 public slots:
     QUrl handleUrl(QUrl &url);
     void applyFixes();
+
+    // StbPlugin interface
+public:
+    QString getIcon(const QSize &size);
 };
 
 }

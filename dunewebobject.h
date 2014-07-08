@@ -285,7 +285,7 @@ public slots:
     QString getDns1Address();
     QString getDns2Address();
     QString getGatewayAddress();
-    int log(const QString message);
+    int log(const QString &message);
     int reboot();
     int getStandbyMode();
     bool fileExists(const QString &path);

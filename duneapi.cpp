@@ -82,3 +82,9 @@ void DuneAPI::applyFixes()
     browser()->evalJs(jsFix);
 }
 
+
+
+QString DuneAPI::getIcon(const QSize &size = QSize())
+{
+    return "";
+}

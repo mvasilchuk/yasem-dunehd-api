@@ -15,7 +15,7 @@ TEMPLATE = lib
 
 DEFINES += DUNEAPI_LIBRARY
 
-INCLUDEPATH += ../yasem-core
+INCLUDEPATH += ../../yasem-core
 
 SOURCES += \
     duneapi.cpp \
@@ -40,7 +40,7 @@ OTHER_FILES += \
     LICENSE \
     README.md
 
-include(../common.pri)
+include(../../common.pri)
 DESTDIR = $$DEFAULT_PLUGIN_DIR
 
 RESOURCES += \
