@@ -21,9 +21,9 @@ DuneAPI::DuneAPI()
 
 PLUGIN_ERROR_CODES DuneAPI::initialize()
 {
-    player(dynamic_cast<MediaPlayerPlugin*>(PluginManager::instance()->getByRole("mediaplayer")));
-    gui(dynamic_cast<GuiPlugin*>(PluginManager::instance()->getByRole("gui")));
-    browser(dynamic_cast<BrowserPlugin*>(PluginManager::instance()->getByRole("browser")));
+    player(dynamic_cast<MediaPlayerPlugin*>(PluginManager::instance()->getByRole(ROLE_MEDIA)));
+    gui(dynamic_cast<GuiPlugin*>(PluginManager::instance()->getByRole(ROLE_GUI)));
+    browser(dynamic_cast<BrowserPlugin*>(PluginManager::instance()->getByRole(ROLE_BROWSER)));
     return PLUGIN_ERROR_NO_ERROR;
 }
 
@@ -58,7 +58,7 @@ void DuneAPI::resetObjects()
 
     QString mimeType = "application/x-dune-stb-api";
 
-    webObjects.clear();
+    getWebObjects().clear();
 
 
     addWebObject(QString("dunehd_object"), mimeType, QString(""), QString("DuneHD API"), [=](){
@@ -67,9 +67,9 @@ void DuneAPI::resetObjects()
 
     qDebug() << "---------------------------------------------------------------";
 
-    qDebug() << "size!!!!" << webObjects.size();
+    qDebug() << "size!!!!" << getWebObjects().size();
 
-    api.clear();
+    getApi().clear();
 }
 
 QUrl DuneAPI::handleUrl(QUrl &url)
@@ -87,4 +87,15 @@ void DuneAPI::applyFixes()
 QString DuneAPI::getIcon(const QSize &size = QSize())
 {
     return "";
+}
+
+
+void yasem::DuneAPI::register_dependencies()
+{
+    add_dependency(ROLE_BROWSER);
+}
+
+void yasem::DuneAPI::register_roles()
+{
+    register_role(ROLE_STB_API);
 }

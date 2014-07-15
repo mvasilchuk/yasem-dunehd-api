@@ -12,7 +12,7 @@
 namespace yasem
 {
 
-class DUNEAPISHARED_EXPORT DuneAPI : public QObject, public virtual Plugin, public StbPlugin
+class DUNEAPISHARED_EXPORT DuneAPI : public QObject, public StbPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "com.mvas.yasem.DuneApiPlugin/1.0" FILE "metadata.json")
@@ -47,6 +47,11 @@ public slots:
     // StbPlugin interface
 public:
     QString getIcon(const QSize &size);
+
+    // Plugin interface
+public:
+    void register_dependencies();
+    void register_roles();
 };
 
 }
