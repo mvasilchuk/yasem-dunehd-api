@@ -1,6 +1,7 @@
 #include "dunewebobject.h"
 
 #include "enums.h"
+#include "dune_enums.h"
 #include "macros.h"
 
 using namespace yasem;

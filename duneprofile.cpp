@@ -1,5 +1,6 @@
 #include "duneprofile.h"
 #include "pluginmanager.h"
+#include "dune_enums.h"
 
 #include "browserplugin.h"
 #include "datasourceplugin.h"
@@ -48,7 +49,7 @@ void DuneProfile::start()
     profilePlugin->browser()->setUserAgent(get("user_agent", userAgents.value("DuneHD")));
     profilePlugin->browser()->stb(profilePlugin);
 
-    QSize portalSize = portalResolutions.value(datasource()->get(DB_TAG_RDIR, "gmode", "1920"));
+    QSize portalSize = portalResolutions.value(datasource()->get(GROUP_SYSTEM, "gmode", "1920"));
     profilePlugin->browser()->setInnerSize(portalSize);
 
     QString urlString = portal();
