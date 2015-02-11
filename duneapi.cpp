@@ -45,12 +45,12 @@ Profile *DuneAPI::createProfile(const QString &id)
     return new DuneProfile(this, id);
 }
 
-void DuneAPI::init()
+void DuneAPI::init(AbstractWebPage* page)
 {
-    resetObjects();
+    resetObjects(page);
 }
 
-void DuneAPI::resetObjects()
+void DuneAPI::resetObjects(AbstractWebPage* page)
 {
     STUB();
     Profile* profile = ProfileManager::instance()->getActiveProfile();
@@ -79,7 +79,8 @@ QUrl DuneAPI::handleUrl(QUrl &url)
 
 void DuneAPI::applyFixes()
 {
-    browser()->evalJs(jsFix);
+    // FIXME: use m_page->evalJs();
+    //browser()->evalJs(jsFix);
 }
 
 

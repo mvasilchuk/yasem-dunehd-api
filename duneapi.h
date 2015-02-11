@@ -12,6 +12,8 @@
 namespace yasem
 {
 
+class AbstractWebPage;
+
 class DUNEAPISHARED_EXPORT DuneAPI : public QObject, public StbPlugin
 {
     Q_OBJECT
@@ -33,9 +35,9 @@ public:
 public:
     QString getProfileClassId();
     Profile *createProfile(const QString &id);
-    void init();
+    void init(AbstractWebPage* page);
 protected:
-    void resetObjects();
+    void resetObjects(AbstractWebPage* page);
 
     QString jsFix;
 
