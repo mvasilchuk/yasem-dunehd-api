@@ -3,14 +3,24 @@
 #include "enums.h"
 #include "dune_enums.h"
 #include "macros.h"
+#include "duneprofile.h"
+#include "pluginmanager.h"
+#include "mediaplayerpluginobject.h"
 
 using namespace yasem;
 
-DuneWebObject::DuneWebObject(Profile *profile, QWidget *parent) :
-    QWidget(parent)
+DuneWebObject::DuneWebObject(DuneProfile *profile, AbstractWebPage* page, QWidget *parent):
+    QWidget(parent),
+    m_page(page),
+    m_profile(profile)
 {
-    Q_ASSERT(profile != NULL);
-    this->profile = profile;
+    m_player = dynamic_cast<MediaPlayerPluginObject*>(PluginManager::instance()->getByRole(ROLE_MEDIA));
+    m_browser = dynamic_cast<BrowserPluginObject*>(PluginManager::instance()->getByRole(ROLE_BROWSER));
+}
+
+DuneWebObject::~DuneWebObject()
+{
+
 }
 
 bool DuneWebObject::init()
@@ -30,61 +40,66 @@ bool DuneWebObject::deinit()
 QString DuneWebObject::getApiVersion()
 {
     STUB();
-    return profile->get(GROUP_SYSTEM, API_VERSION);
+    return profile()->datasource()->get(GROUP_SYSTEM, API_VERSION);
 }
 
 QString DuneWebObject::getProductId()
 {
-    STUB();
-    return profile->get(GROUP_SYSTEM, PRODUCT_ID);
+    QString result = profile()->datasource()->get(GROUP_SYSTEM, PRODUCT_ID);
+    STUB() << result;
+    return result;
 }
 
 QString DuneWebObject::getSerialNumber()
 {
-    STUB();
-    return profile->get(GROUP_SYSTEM, SERIAL_NUMBER);
+    QString result = profile()->datasource()->get(GROUP_SYSTEM, SERIAL_NUMBER);
+    STUB() << result;
+    return result;
 }
 
 QString DuneWebObject::getFirmwareVersion()
 {
-    STUB();
-    return profile->get(GROUP_SYSTEM, FIRMWARE_VERSION);
+    QString result = profile()->datasource()->get(GROUP_SYSTEM, FIRMWARE_VERSION);
+    STUB() << result;
+    return result;
 }
 
 QString DuneWebObject::getMacAddress()
 {
-    STUB();
-    return profile->get(GROUP_SYSTEM, MAC_ADDRESS);
+    QString result = profile()->datasource()->get(GROUP_SYSTEM, MAC_ADDRESS);
+    STUB() << result;
+    return result;
 }
 
 QString DuneWebObject::getPrimaryMacAddress()
 {
-    STUB();
-    return profile->get(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS);
+    QString result = profile()->datasource()->get(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS);
+    STUB() << result;
+    return result;
 }
 
 QString DuneWebObject::getIpAddress()
 {
     STUB();
-    return profile->get(GROUP_SYSTEM, IP_ADDRESS);
+    return profile()->datasource()->get(GROUP_SYSTEM, IP_ADDRESS);
 }
 
 QString DuneWebObject::getDns1Address()
 {
     STUB();
-    return profile->get(GROUP_SYSTEM, DNS_1_ADDRESS);
+    return profile()->datasource()->get(GROUP_SYSTEM, DNS_1_ADDRESS);
 }
 
 QString DuneWebObject::getDns2Address()
 {
     STUB();
-    return profile->get(GROUP_SYSTEM, DNS_2_ADDRESS);
+    return profile()->datasource()->get(GROUP_SYSTEM, DNS_2_ADDRESS);
 }
 
 QString DuneWebObject::getGatewayAddress()
 {
     STUB();
-    return profile->get(GROUP_SYSTEM, GATEWAY_ADDRESS);
+    return profile()->datasource()->get(GROUP_SYSTEM, GATEWAY_ADDRESS);
 }
 
 int DuneWebObject::log(const QString &message)
@@ -114,13 +129,13 @@ bool DuneWebObject::fileExists(const QString &path)
 QString DuneWebObject::getUserSetting(const QString &key)
 {
     STUB() << key;
-    return profile->get(GROUP_USER, key);
+    return profile()->datasource()->get(GROUP_USER, key);
 }
 
 int DuneWebObject::setUserSetting(const QString &key, const QString &value)
 {
     STUB() << key << value;
-    return profile->set(QString("%1/%2").arg(GROUP_USER).arg(key), value);
+    return profile()->datasource()->set(GROUP_USER, key, value);
 }
 
 QString DuneWebObject::getFirmwareUpgradeUrl()
@@ -166,12 +181,32 @@ int DuneWebObject::getPlaybackState()
 int DuneWebObject::play(const QString &mediaUrl)
 {
     STUB() << mediaUrl;
+
+    QUrl url(mediaUrl);
+    QString new_url;
+
+    if(url.host() == "ts" || url.host() == "mp4")
+    {
+        // A workaround for strange double protocols like http://ts://<whatever>
+        new_url = url.scheme().append(":").append(url.path());
+    }
+    else
+    {
+        new_url = mediaUrl;
+    }
+
+    // Removing dune parameters, like |||dune_params|||buffering_ms:1000
+    new_url = new_url.split("|||")[0];
+
+    player()->mediaPlay(new_url);
     return 0;
 }
 
 int DuneWebObject::stop()
 {
     STUB();
+    player()->mediaStop();
+    //m_browser->raise(); // FIXME: Workaround
     return 0;
 }
 
@@ -262,7 +297,7 @@ int DuneWebObject::setSpeed(int speed)
 bool DuneWebObject::hasLength()
 {
     STUB();
-    return true;
+    return player()->getDuration() > -1;
 }
 
 /**
@@ -272,7 +307,7 @@ bool DuneWebObject::hasLength()
 int DuneWebObject::getLengthInSeconds()
 {
     STUB();
-    return 0;
+    return player()->getDuration() / 1000;
 }
 
 /**
@@ -283,6 +318,7 @@ int DuneWebObject::getLengthInSeconds()
 int DuneWebObject::setInitialPositionInSeconds(int seconds)
 {
     STUB() << seconds;
+    player()->setPosition(seconds * 1000);
     return 0;
 }
 
@@ -293,7 +329,7 @@ int DuneWebObject::setInitialPositionInSeconds(int seconds)
 int DuneWebObject::getPositionInSeconds()
 {
     STUB();
-    return 0;
+    return player()->getPosition() / 1000;
 }
 
 /**
@@ -304,6 +340,7 @@ int DuneWebObject::getPositionInSeconds()
 int DuneWebObject::setPositionInSeconds(int seconds)
 {
     STUB() << seconds;
+    player()->setPosition(seconds * 1000);
     return 0;
 }
 
@@ -334,8 +371,9 @@ int DuneWebObject::setSpeedAndPositionInSeconds(int speed, int seconds)
  */
 int DuneWebObject::getVolume()
 {
-    STUB();
-    return 100;
+    int value = player()->getVolume();
+    STUB() << value;
+    return value;
 }
 
 /**
@@ -352,18 +390,20 @@ int DuneWebObject::setVolume(int volume)
 bool DuneWebObject::isMuteEnabled()
 {
     STUB();
-    return false;
+    return player()->isMute();
 }
 
 int DuneWebObject::enableMute()
 {
     STUB();
+    player()->setMute(true);
     return 0;
 }
 
 int DuneWebObject::disableMute()
 {
     STUB();
+    player()->setMute(false);
     return 0;
 }
 
@@ -399,7 +439,7 @@ QString DuneWebObject::getAudioTracksDescription()
 int DuneWebObject::getAudioTrack()
 {
     STUB();
-    return 0;
+    return player()->getAudioPID();
 }
 
 /**
@@ -410,6 +450,7 @@ int DuneWebObject::getAudioTrack()
 int DuneWebObject::setAudioTrack(int track)
 {
     STUB() << track;
+    player()->setAudioPID(track);
     return 0;
 }
 
@@ -579,6 +620,7 @@ int DuneWebObject::getColorKey()
 int DuneWebObject::setColorKey(int color)
 {
     STUB() << color;
+    m_page->setChromaKey(QColor::fromRgb(color));
     return OK;
 }
 
@@ -665,6 +707,8 @@ int DuneWebObject::getWindowRectHeight()
 int DuneWebObject::setWindowRect(int x, int y, int width, int height)
 {
     STUB() << x << y << width << height;
+    player()->setViewport(QRect(x, y, width, height));
+    //player()->raise(); //FIXME: Workaround. Not sure if video window should be raised manually
     return 0;
 }
 
@@ -803,7 +847,7 @@ int DuneWebObject::setScreenSize(int size)
 QString DuneWebObject::getHomePage()
 {
     STUB();
-    return profile->get(QString("%1/%2").arg(GROUP_SYSTEM).arg("home-page"), "home-page");
+    return profile()->datasource()->get(QString("%1/%2").arg(GROUP_SYSTEM).arg("home-page"), "home-page");
 }
 
 int DuneWebObject::exitBrowser(int mode)
@@ -1269,11 +1313,66 @@ QString DuneWebObject::getChannelsDescription(int startIndex, int maxCount)
     return "[]";
 }
 
+DuneProfile *DuneWebObject::profile()
+{
+    return m_profile;
+}
+
+MediaPlayerPluginObject *DuneWebObject::player()
+{
+    return m_player;
+}
+
 // ----------------------------- States and events
 
 int DuneWebObject::setPlaybackEventCallback(const QString &callback)
 {
-    STUB() << callback;
+    static PlaybackState last_state = PLAYBACK_STATE_STOPPED;
+
+    m_event_callback_string = QString("(%1)(%2, %3, %4)").arg(callback);
+    //STUB() << m_event_callback_string;
+
+    connect(player(), &MediaPlayerPluginObject::started, [=]() {
+        QString str = m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_PLAYING).arg(PLAYBACK_EVENT_NO_EVENT);
+        m_page->evalJs(str);
+        last_state = PLAYBACK_STATE_PLAYING;
+    });
+
+    connect(player(), &MediaPlayerPluginObject::stopped, [=]() {
+        m_page->evalJs(m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_STOPPED).arg(PLAYBACK_EVENT_NO_EVENT));
+        last_state = PLAYBACK_STATE_STOPPED;
+    });
+
+    connect(player(), &MediaPlayerPluginObject::paused, [=]() {
+        m_page->evalJs(m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_PAUSED).arg(PLAYBACK_EVENT_NO_EVENT));
+        last_state = PLAYBACK_STATE_PAUSED;
+    });
+
+    connect(player(), &MediaPlayerPluginObject::statusChanged, [=](MediaStatus status) {
+
+        PlaybackState state;
+        PlaybackEvent event = PLAYBACK_EVENT_NO_EVENT;
+        switch(status)
+        {
+            case MediaStatus::LoadingMedia: {
+                state = PLAYBACK_STATE_INITIALIZING;
+                break;
+            }
+            case MediaStatus::BufferingMedia: {
+                state = PLAYBACK_STATE_BUFFERING;
+                break;
+            }
+            case MediaStatus::EndOfMedia: {
+                state = PLAYBACK_STATE_FINISHED;
+                event = PLAYBACK_EVENT_END_OF_MEDIA;
+                break;
+            }
+        }
+
+        m_page->evalJs(m_event_callback_string.arg(last_state).arg(state).arg(event));
+        last_state = state;
+    });
+
     return 0;
 }
 

@@ -1,7 +1,6 @@
 #ifndef DUNEPROFILE_H
 #define DUNEPROFILE_H
 
-#include "stbprofileplugin.h"
 #include "stbprofile.h"
 
 #include <QObject>
@@ -13,7 +12,7 @@ class DuneProfile : public QObject, public Profile
 {
     Q_OBJECT
 public:
-    explicit DuneProfile(StbPlugin *profilePlugin, const QString &id);
+    explicit DuneProfile(StbPluginObject *profilePlugin, const QString &id);
 
 signals:
 
@@ -27,6 +26,9 @@ public:
     void initDefaults();
     void configureKeyMap();
     QString portal();
+
+protected:
+    void loadConfigOptions();
 };
 
 }

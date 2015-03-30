@@ -5,29 +5,39 @@
 #-------------------------------------------------
 
 VERSION = 0.1.0
-
-QT       = core gui widgets
-
-CONFIG += c++11
-
 TARGET = yasem-dunehd-api
 TEMPLATE = lib
 
+include($${top_srcdir}/common.pri)
+
+QT      = core gui widgets
+
 DEFINES += DUNEAPI_LIBRARY
 
-INCLUDEPATH += ../../yasem-core
+INCLUDEPATH += ../../yasem-core/
+DEPENDPATH += ../../yasem-core/
 
 SOURCES += \
-    duneapi.cpp \
     duneprofile.cpp \
-    dunewebobject.cpp
+    dunewebobject.cpp \
+    $${CORE_ROOT_DIR}/stbpluginobject.cpp \
+    $${CORE_ROOT_DIR}/mediaplayerpluginobject.cpp \
+    duneapiplugin.cpp \
+    duneapistbobject.cpp \
+    dunescreenobject.cpp
 
 HEADERS +=\
-    duneapi.h \
     duneprofile.h \
     duneapi_global.h \
     dunewebobject.h \
-    dune_enums.h
+    dune_enums.h \
+    $${CORE_ROOT_DIR}/stbpluginobject.h \
+    $${CORE_ROOT_DIR}/mediaplayerpluginobject.h \
+    $${CORE_ROOT_DIR}/profileconfigparserimpl.h \
+    $${CORE_ROOT_DIR}/browserpluginobject.h \
+    duneapiplugin.h \
+    duneapistbobject.h \
+    dunescreenobject.h
 
 unix {
     target.path = /usr/lib
@@ -39,9 +49,6 @@ OTHER_FILES += \
     resources/dunedh.js \
     LICENSE \
     README.md
-
-include(../../common.pri)
-DESTDIR = $$DEFAULT_PLUGIN_DIR
 
 RESOURCES += \
     resources.qrc

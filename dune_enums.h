@@ -1,6 +1,8 @@
 #ifndef DUNE_ENUMS_H
 #define DUNE_ENUMS_H
 
+#include <QString>
+
 static const QString GROUP_SYSTEM = "SYSTEM";
 static const QString GROUP_USER = "USER";
 
@@ -71,7 +73,7 @@ enum Keys {
     KEY_RIGHT = 39,
     KEY_DOWN = 40,
     KEY_SELECT = 41,
-    KEY_0 =48,
+    KEY_0 = 48,
     KEY_1 = 49,
     KEY_2 = 50,
     KEY_3 = 51,
@@ -109,15 +111,6 @@ enum Keys {
     KEY_PLAY = 250,
     KEY_ZOOM = 251
 };
-
-
-
-
-
-
-
-
-
 
 
 #endif // DUNE_ENUMS_H

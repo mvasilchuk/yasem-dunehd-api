@@ -2,26 +2,22 @@
 #include "pluginmanager.h"
 #include "dune_enums.h"
 
-#include "browserplugin.h"
+#include "browserpluginobject.h"
 #include "datasourceplugin.h"
-#include "mediasignalsender.h"
-#include "mediaplayerplugin.h"
+#include "mediaplayerpluginobject.h"
 #include "dunewebobject.h"
 
 #include <QDir>
 
 using namespace yasem;
 
-DuneProfile::DuneProfile(StbPlugin *profilePlugin, const QString &id = "") :
+DuneProfile::DuneProfile(StbPluginObject *profilePlugin, const QString &id = "") :
     Profile(profilePlugin, id)
 {
     Q_ASSERT(profilePlugin);
 
-    //User-Agent: DuneHD/1.0 (product_id: hdtv_101_qwerty; firmware_version: 111216_2030_devel)
-    //X-Dune-Serial-Number: 0FC8-B9E9-1F23-0F8E-3CA2-67A7-4D3B-F400
-    //X-Dune-Interface-Language: english
-
-    userAgents.insert("DuneHD", "DuneHD/1.0 (product_id: hdtv_101_qwerty; firmware_version: 111216_2030_devel) arora");
+    //userAgents.insert("DuneHD", "DuneHD/1.0 (product_id: hdtv_101_qwerty; firmware_version: 111216_2030_devel) arora");
+    userAgents.insert("DuneHD", "Opera/9.80 (Linux mips; U; en) Presto/2.10.287 Version/12.00 DuneHD/1.0 (tv102; 150227_0032_b9) CE-HTML/1.0 NETRANGEMMH");
 
     portalResolutions.insert("720", QSize(720, 576));
     portalResolutions.insert("1280", QSize(1280, 720));
@@ -30,32 +26,36 @@ DuneProfile::DuneProfile(StbPlugin *profilePlugin, const QString &id = "") :
     videoResolutions.insert("720p", QSize(1280, 720));
     videoResolutions.insert("1080p", QSize(1920, 1080));
 
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, PORTAL_ADDRESS,    "http://",             QObject::tr("Portal URL")));
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, SERIAL_NUMBER,     "0000000000",          QObject::tr("Serial number")));
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, MAC_ADDRESS,       "00:1A:79:00:00:00",   QObject::tr("MAC address")));
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS, "00:1A:79:00:00:00", QObject::tr("Primary MAC address")));
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, IP_ADDRESS,       "192.168.0.10",         QObject::tr("IP address")));
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, DNS_2_ADDRESS,    "8.8.8.8",              QObject::tr("DNS 1 address")));
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, DNS_1_ADDRESS,    "8.8.4.4",              QObject::tr("DNS 2 address")));
-    profileConfig.add(ProfileConfig::Option(GROUP_SYSTEM, GATEWAY_ADDRESS,  "",                     QObject::tr("Gateway")));
+    loadConfigOptions();
 }
 
 void DuneProfile::start()
 {
     STUB();
 
+    BrowserPluginObject* browser = m_profile_plugin->browser();
+    if(!browser)
+    {
+        WARN() << "MagProfile::start() : browser not found!";
+        return;
+    }
+
     configureKeyMap();
 
-    profilePlugin->browser()->setUserAgent(get("user_agent", userAgents.value("DuneHD")));
-    profilePlugin->browser()->stb(profilePlugin);
+    MediaPlayerPluginObject* player = m_profile_plugin->player();
+
+
+    browser->setUserAgent(get("user_agent", userAgents.value("DuneHD")));
+    browser->stb(m_profile_plugin);
 
     QSize portalSize = portalResolutions.value(datasource()->get(GROUP_SYSTEM, "gmode", "1920"));
-    profilePlugin->browser()->setInnerSize(portalSize);
+    AbstractWebPage* page = m_profile_plugin->browser()->getFirstPage();
+    page->setPageViewportSize(portalSize);
 
     QString urlString = portal();
     DEBUG() << urlString;
     QUrl portalUrl = QUrl(urlString.replace("~", QDir::homePath()));
-    profilePlugin->browser()->load(portalUrl);
+    page->load(portalUrl);
 }
 
 void DuneProfile::stop()
@@ -71,7 +71,7 @@ void DuneProfile::initDefaults()
 void DuneProfile::configureKeyMap()
 {
     STUB();
-    BrowserPlugin* browser = profilePlugin->browser();
+    BrowserPluginObject* browser = m_profile_plugin->browser();
 
     browser->clearKeyEvents();
 
@@ -102,4 +102,36 @@ void DuneProfile::configureKeyMap()
 QString DuneProfile::portal()
 {
     return datasource()->get(GROUP_SYSTEM, PORTAL_ADDRESS);
+}
+
+void DuneProfile::loadConfigOptions()
+{
+    QHash<QString, QString> models;
+    models.insert("Dune HD TV-102", "Dune HD TV-102");
+
+    ProfileConfigGroup &main_group = profileConfiguration.groups.first(); //Main group is created by default in profile
+
+    main_group.options.append(ConfigOption(DB_TAG_PROFILE, "Model",             tr("STB Model"),            "Dune HD TV-102",       "options", "", models));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, PORTAL_ADDRESS,        tr("Portal URL"),           "http://", "string"));
+
+    QHash<QString, QString> gmodes;
+    gmodes.insert("720", "720x576");
+    gmodes.insert("1280", "1280x720");
+    gmodes.insert("1920", "1920x1080");
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, "gmode",               tr("Graphical mode"),       "1280",         "options", "", gmodes));
+
+    QHash<QString, QString> vmodes;
+    vmodes.insert("720p", "720p (HD)");
+    vmodes.insert("1080p", "1080p (FullHD)");
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, "vmode",               tr("Video mode"),           "720p",         "options", "", vmodes));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, PRODUCT_ID,            tr("Product ID"),           "tv102", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, FIRMWARE_VERSION,      tr("Firmware version"),     "150227_0032_b9", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, SERIAL_NUMBER,         tr("Serial number"),        "0000-0000-0000-0000-0000-0000-0000-0000", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, MAC_ADDRESS,           tr("MAC address"),          "A0:0A:BF:00:00:00", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS,   tr("Primary MAC address"),  "A0:0A:BF:00:00:00", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, IP_ADDRESS,            tr("IP address"),           "192.168.0.10", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, DNS_1_ADDRESS,         tr("DNS 1 address"),        "8.8.8.8", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, DNS_2_ADDRESS,         tr("DNS 2 address"),        "8.8.4.4", "string"));
+    main_group.options.append(ConfigOption(GROUP_SYSTEM, GATEWAY_ADDRESS,       tr("Gateway"),              "", "string"));
+
 }
