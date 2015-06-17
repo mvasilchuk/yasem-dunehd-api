@@ -42,9 +42,6 @@ void DuneProfile::start()
 
     configureKeyMap();
 
-    MediaPlayerPluginObject* player = m_profile_plugin->player();
-
-
     browser->setUserAgent(get("user_agent", userAgents.value("DuneHD")));
     browser->stb(m_profile_plugin);
 
