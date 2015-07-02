@@ -6,6 +6,9 @@
 #include "datasourceplugin.h"
 #include "mediaplayerpluginobject.h"
 #include "dunewebobject.h"
+#include "stbpluginobject.h"
+#include "datasourcepluginobject.h"
+#include "abstractwebpage.h"
 
 #include <QDir>
 

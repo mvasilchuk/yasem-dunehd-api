@@ -6,6 +6,9 @@
 #include "duneprofile.h"
 #include "pluginmanager.h"
 #include "mediaplayerpluginobject.h"
+#include "browserpluginobject.h"
+#include "datasourcepluginobject.h"
+#include "abstractwebpage.h"
 
 using namespace yasem;
 
