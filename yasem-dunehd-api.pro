@@ -20,8 +20,6 @@ DEPENDPATH += ../../yasem-core/
 SOURCES += \
     duneprofile.cpp \
     dunewebobject.cpp \
-    $${CORE_ROOT_DIR}/stbpluginobject.cpp \
-    $${CORE_ROOT_DIR}/mediaplayerpluginobject.cpp \
     duneapiplugin.cpp \
     duneapistbobject.cpp \
     dunescreenobject.cpp
@@ -31,10 +29,6 @@ HEADERS +=\
     duneapi_global.h \
     dunewebobject.h \
     dune_enums.h \
-    $${CORE_ROOT_DIR}/stbpluginobject.h \
-    $${CORE_ROOT_DIR}/mediaplayerpluginobject.h \
-    $${CORE_ROOT_DIR}/profileconfigparserimpl.h \
-    $${CORE_ROOT_DIR}/browserpluginobject.h \
     duneapiplugin.h \
     duneapistbobject.h \
     dunescreenobject.h

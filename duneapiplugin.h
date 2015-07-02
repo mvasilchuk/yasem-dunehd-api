@@ -20,7 +20,9 @@ class DUNEAPISHARED_EXPORT DuneAPI : public Plugin
     Q_INTERFACES(yasem::Plugin)
 
     Q_CLASSINFO("author", "Maxim Vasilchuk")
-    Q_CLASSINFO("description", "DuneHD API implementation for YASEM")
+    Q_CLASSINFO("description", "DuneHD API")
+    Q_CLASSINFO("version", MODULE_VERSION)
+    Q_CLASSINFO("revision", GIT_VERSION)
 public:
 
     explicit DuneAPI(QObject* parent = 0);
