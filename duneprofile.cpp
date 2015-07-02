@@ -72,28 +72,28 @@ void DuneProfile::configureKeyMap()
 
     browser->clearKeyEvents();
 
-    browser->registerKeyEvent(RC_KEY_OK,    KEY_ENTER,   KEY_ENTER );
-    browser->registerKeyEvent(RC_KEY_LEFT,  KEY_LEFT,    KEY_LEFT);
-    browser->registerKeyEvent(RC_KEY_RIGHT, KEY_RIGHT,   KEY_RIGHT);
-    browser->registerKeyEvent(RC_KEY_UP,    KEY_UP,      KEY_UP);
-    browser->registerKeyEvent(RC_KEY_DOWN,  KEY_DOWN,    KEY_DOWN);
+    browser->registerKeyEvent(RC_KEY_OK,    DuneWebObject::KEY_ENTER);
+    browser->registerKeyEvent(RC_KEY_LEFT,  DuneWebObject::KEY_LEFT);
+    browser->registerKeyEvent(RC_KEY_RIGHT, DuneWebObject::KEY_RIGHT);
+    browser->registerKeyEvent(RC_KEY_UP,    DuneWebObject::KEY_UP);
+    browser->registerKeyEvent(RC_KEY_DOWN,  DuneWebObject::KEY_DOWN);
 
-    browser->registerKeyEvent(RC_KEY_BACK,      KEY_RETURN,  KEY_RETURN);
-    browser->registerKeyEvent(RC_KEY_PAGE_UP,   KEY_PPLUS,   KEY_PPLUS);
-    browser->registerKeyEvent(RC_KEY_PAGE_DOWN, KEY_PMINUS,  KEY_PMINUS);
+    browser->registerKeyEvent(RC_KEY_BACK,      DuneWebObject::KEY_RETURN);
+    browser->registerKeyEvent(RC_KEY_PAGE_UP,   DuneWebObject::KEY_PPLUS);
+    browser->registerKeyEvent(RC_KEY_PAGE_DOWN, DuneWebObject::KEY_PMINUS);
 
-    browser->registerKeyEvent(RC_KEY_FAST_FORWARD,  KEY_FWD,     KEY_FWD);
-    browser->registerKeyEvent(RC_KEY_REWIND,        KEY_REW,     KEY_REW);
-    browser->registerKeyEvent(RC_KEY_STOP,          KEY_STOP,    KEY_STOP);
-    browser->registerKeyEvent(RC_KEY_PLAY_PAUSE,    KEY_PLAY,    KEY_PLAY);
+    browser->registerKeyEvent(RC_KEY_FAST_FORWARD,  DuneWebObject::KEY_FWD);
+    browser->registerKeyEvent(RC_KEY_REWIND,        DuneWebObject::KEY_REW);
+    browser->registerKeyEvent(RC_KEY_STOP,          DuneWebObject::KEY_STOP);
+    browser->registerKeyEvent(RC_KEY_PLAY_PAUSE,    DuneWebObject::KEY_PLAY);
 
-    browser->registerKeyEvent(RC_KEY_EXIT, KEY_RETURN,   KEY_RETURN);
-    browser->registerKeyEvent(RC_KEY_MENU, KEY_TOP_MENU, KEY_TOP_MENU);
+    browser->registerKeyEvent(RC_KEY_EXIT, DuneWebObject::KEY_RETURN);
+    browser->registerKeyEvent(RC_KEY_MENU, DuneWebObject::KEY_TOP_MENU);
 
-    browser->registerKeyEvent(RC_KEY_RED,       KEY_A, KEY_A);
-    browser->registerKeyEvent(RC_KEY_GREEN,     KEY_B, KEY_B);
-    browser->registerKeyEvent(RC_KEY_YELLOW,    KEY_C, KEY_C);
-    browser->registerKeyEvent(RC_KEY_BLUE,      KEY_D, KEY_D);
+    browser->registerKeyEvent(RC_KEY_RED,       DuneWebObject::KEY_A);
+    browser->registerKeyEvent(RC_KEY_GREEN,     DuneWebObject::KEY_B);
+    browser->registerKeyEvent(RC_KEY_YELLOW,    DuneWebObject::KEY_C);
+    browser->registerKeyEvent(RC_KEY_BLUE,      DuneWebObject::KEY_D);
 }
 
 QString DuneProfile::portal()

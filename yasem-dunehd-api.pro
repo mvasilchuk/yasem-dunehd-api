@@ -14,9 +14,6 @@ QT      = core gui widgets
 
 DEFINES += DUNEAPI_LIBRARY
 
-INCLUDEPATH += ../../yasem-core/
-DEPENDPATH += ../../yasem-core/
-
 SOURCES += \
     duneprofile.cpp \
     dunewebobject.cpp \

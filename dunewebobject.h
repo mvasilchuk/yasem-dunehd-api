@@ -65,7 +65,61 @@ class DuneWebObject : public QWidget
     Q_PROPERTY(int KEY_DUNE MEMBER KEY_DUNE CONSTANT FINAL)
     Q_PROPERTY(int KEY_PLAY MEMBER KEY_PLAY CONSTANT FINAL)
     Q_PROPERTY(int KEY_ZOOM MEMBER KEY_ZOOM CONSTANT FINAL)
+
 public:
+
+
+    enum Keys {
+        KEY_RETURN = 8,
+        KEY_CLEAR = 12,
+        KEY_ENTER = 13,
+        KEY_POPUP = 18,
+        KEY_PAUSE = 19,
+        KEY_PPLUS = 33,
+        KEY_PMINUS = 34,
+        KEY_LEFT  = 37,
+        KEY_UP = 38,
+        KEY_RIGHT = 39,
+        KEY_DOWN = 40,
+        KEY_SELECT = 41,
+        KEY_0 = 48,
+        KEY_1 = 49,
+        KEY_2 = 50,
+        KEY_3 = 51,
+        KEY_4 = 52,
+        KEY_5 = 53,
+        KEY_6 = 54,
+        KEY_7 = 55,
+        KEY_8 = 56,
+        KEY_9 = 57,
+        KEY_ANGLE = 168,
+        KEY_SEARCH = 170,
+        KEY_MUTE = 173,
+        KEY_VMINUS = 174,
+        KEY_VPLUS = 175,
+        KEY_NEXT = 176,
+        KEY_PREV = 177,
+        KEY_STOP = 178,
+        KEY_A    = 193,
+        KEY_B    = 194,
+        KEY_C    = 195,
+        KEY_D    = 196,
+        KEY_URL  = 197,
+        KEY_EJECT = 198,
+        KEY_INFO = 199,
+        KEY_TOP_MENU = 200,
+        KEY_SETUP = 201,
+        KEY_MODE = 202,
+        KEY_SLOW = 203,
+        KEY_REW = 204,
+        KEY_FWD = 205,
+        KEY_SUBTITLE = 206,
+        KEY_AUDIO = 207,
+        KEY_REC = 208,
+        KEY_DUNE = 209,
+        KEY_PLAY = 250,
+        KEY_ZOOM = 251
+    };
 
     enum StandbyModes {
         STANDBY_MODE_OFF,
