@@ -14,8 +14,8 @@
 
 using namespace yasem;
 
-DuneApiStbObject::DuneApiStbObject(Plugin* plugin):
-    StbPluginObject(plugin)
+DuneApiStbObject::DuneApiStbObject(SDK::Plugin* plugin):
+    SDK::StbPluginObject(plugin)
 {
 
 }
@@ -27,27 +27,27 @@ DuneApiStbObject::~DuneApiStbObject()
 
 
 
-PluginObjectResult DuneApiStbObject::init()
+SDK::PluginObjectResult DuneApiStbObject::init()
 {
-    StbPluginObject::init();// It's reqired to register profile class id
+    SDK::StbPluginObject::init();// It's reqired to register profile class id
 
-    player(dynamic_cast<MediaPlayerPluginObject*>(PluginManager::instance()->getByRole(ROLE_MEDIA)));
-    browser(dynamic_cast<BrowserPluginObject*>(PluginManager::instance()->getByRole(ROLE_BROWSER)));
+    player(__get_plugin<SDK::MediaPlayerPluginObject*>(SDK::ROLE_MEDIA));
+    browser(__get_plugin<SDK::BrowserPluginObject*>(SDK::ROLE_BROWSER));
 
     QFile res(QString(":/dunehd/js/dunehd.js"));
     res.open(QIODevice::ReadOnly|QIODevice::Text);
     jsFix = res.readAll();
 
-    QList<StbSubmodel> &submodels = getSubmodels();
+    QList<SDK::StbSubmodel> &submodels = getSubmodels();
 
-    submodels.append(StbSubmodel(QString::number(Dune_HD_TV_102), "Dune HD TV-102"));
+    submodels.append(SDK::StbSubmodel(QString::number(Dune_HD_TV_102), "Dune HD TV-102"));
 
-    return PLUGIN_OBJECT_RESULT_OK;
+    return SDK::PLUGIN_OBJECT_RESULT_OK;
 }
 
-PluginObjectResult DuneApiStbObject::deinit()
+SDK::PluginObjectResult DuneApiStbObject::deinit()
 {
-    return PLUGIN_OBJECT_RESULT_OK;
+    return SDK::PLUGIN_OBJECT_RESULT_OK;
 }
 
 QString DuneApiStbObject::getProfileClassId()
@@ -55,13 +55,13 @@ QString DuneApiStbObject::getProfileClassId()
     return "dunehd";
 }
 
-Profile *DuneApiStbObject::createProfile(const QString &id)
+SDK::Profile *DuneApiStbObject::createProfile(const QString &id)
 {
     STUB();
     return new DuneProfile(this, id);
 }
 
-void DuneApiStbObject::initObject(AbstractWebPage *page)
+void DuneApiStbObject::initObject(SDK::AbstractWebPage *page)
 {
     resetObjects(page);
 }
@@ -82,10 +82,10 @@ void DuneApiStbObject::applyFixes()
     //browser()->evalJs(jsFix);
 }
 
-void DuneApiStbObject::resetObjects(AbstractWebPage* page)
+void DuneApiStbObject::resetObjects(SDK::AbstractWebPage* page)
 {
     STUB();
-    DuneProfile* profile = dynamic_cast<DuneProfile*>(ProfileManager::instance()->getActiveProfile());
+    DuneProfile* profile = dynamic_cast<DuneProfile*>(SDK::ProfileManager::instance()->getActiveProfile());
 
     QHash<QString, QObject*>& api = getApi();
     api.clear();

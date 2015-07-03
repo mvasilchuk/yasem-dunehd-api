@@ -12,13 +12,13 @@
 
 using namespace yasem;
 
-DuneWebObject::DuneWebObject(DuneProfile *profile, AbstractWebPage* page, QWidget *parent):
+DuneWebObject::DuneWebObject(DuneProfile *profile, SDK::AbstractWebPage* page, QWidget *parent):
     QWidget(parent),
     m_page(page),
     m_profile(profile)
 {
-    m_player = dynamic_cast<MediaPlayerPluginObject*>(PluginManager::instance()->getByRole(ROLE_MEDIA));
-    m_browser = dynamic_cast<BrowserPluginObject*>(PluginManager::instance()->getByRole(ROLE_BROWSER));
+    m_player = __get_plugin<SDK::MediaPlayerPluginObject*>(SDK::ROLE_MEDIA);
+    m_browser = __get_plugin<SDK::BrowserPluginObject*>(SDK::ROLE_BROWSER);
 }
 
 DuneWebObject::~DuneWebObject()
@@ -1321,7 +1321,7 @@ DuneProfile *DuneWebObject::profile()
     return m_profile;
 }
 
-MediaPlayerPluginObject *DuneWebObject::player()
+SDK::MediaPlayerPluginObject *DuneWebObject::player()
 {
     return m_player;
 }
@@ -1335,37 +1335,37 @@ int DuneWebObject::setPlaybackEventCallback(const QString &callback)
     m_event_callback_string = QString("(%1)(%2, %3, %4)").arg(callback);
     //STUB() << m_event_callback_string;
 
-    connect(player(), &MediaPlayerPluginObject::started, [=]() {
+    connect(player(), &SDK::MediaPlayerPluginObject::started, [=]() {
         QString str = m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_PLAYING).arg(PLAYBACK_EVENT_NO_EVENT);
         m_page->evalJs(str);
         last_state = PLAYBACK_STATE_PLAYING;
     });
 
-    connect(player(), &MediaPlayerPluginObject::stopped, [=]() {
+    connect(player(), &SDK::MediaPlayerPluginObject::stopped, [=]() {
         m_page->evalJs(m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_STOPPED).arg(PLAYBACK_EVENT_NO_EVENT));
         last_state = PLAYBACK_STATE_STOPPED;
     });
 
-    connect(player(), &MediaPlayerPluginObject::paused, [=]() {
+    connect(player(), &SDK::MediaPlayerPluginObject::paused, [=]() {
         m_page->evalJs(m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_PAUSED).arg(PLAYBACK_EVENT_NO_EVENT));
         last_state = PLAYBACK_STATE_PAUSED;
     });
 
-    connect(player(), &MediaPlayerPluginObject::statusChanged, [=](MediaStatus status) {
+    connect(player(), &SDK::MediaPlayerPluginObject::statusChanged, [=](SDK::MediaStatus status) {
 
         PlaybackState state;
         PlaybackEvent event = PLAYBACK_EVENT_NO_EVENT;
         switch(status)
         {
-            case MediaStatus::LoadingMedia: {
+            case SDK::MediaStatus::LoadingMedia: {
                 state = PLAYBACK_STATE_INITIALIZING;
                 break;
             }
-            case MediaStatus::BufferingMedia: {
+            case SDK::MediaStatus::BufferingMedia: {
                 state = PLAYBACK_STATE_BUFFERING;
                 break;
             }
-            case MediaStatus::EndOfMedia: {
+            case SDK::MediaStatus::EndOfMedia: {
                 state = PLAYBACK_STATE_FINISHED;
                 event = PLAYBACK_EVENT_END_OF_MEDIA;
                 break;

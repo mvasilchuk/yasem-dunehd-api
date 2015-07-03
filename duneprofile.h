@@ -8,11 +8,11 @@
 namespace yasem
 {
 
-class DuneProfile : public QObject, public Profile
+class DuneProfile : public QObject, public SDK::Profile
 {
     Q_OBJECT
 public:
-    explicit DuneProfile(StbPluginObject *profilePlugin, const QString &id);
+    explicit DuneProfile(SDK::StbPluginObject *profilePlugin, const QString &id);
 
 signals:
 

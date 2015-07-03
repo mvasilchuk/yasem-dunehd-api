@@ -6,11 +6,11 @@
 
 using namespace yasem;
 
-DuneScreenObject::DuneScreenObject(Profile* profile, AbstractWebPage* page):
+DuneScreenObject::DuneScreenObject(SDK::Profile* profile, SDK::AbstractWebPage* page):
     m_profile(profile),
     m_page(page)
 {
-    DatasourcePluginObject* ds = profile->datasource();
+    SDK::DatasourcePluginObject* ds = profile->datasource();
 
     QString gmode = ds->get(GROUP_SYSTEM, "gmode", "1280");
 

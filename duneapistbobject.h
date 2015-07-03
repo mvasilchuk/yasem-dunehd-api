@@ -6,7 +6,7 @@
 
 namespace yasem {
 
-class DuneApiStbObject: public StbPluginObject
+class DuneApiStbObject: public SDK::StbPluginObject
 {
     Q_OBJECT
 public:
@@ -15,23 +15,23 @@ public:
         Dune_HD_TV_102
     };
 
-    DuneApiStbObject(Plugin* plugin);
+    DuneApiStbObject(SDK::Plugin* plugin);
     ~DuneApiStbObject();
 
     // AbstractPluginObject interface
 public:
-    PluginObjectResult init();
-    PluginObjectResult deinit();
+    SDK::PluginObjectResult init();
+    SDK::PluginObjectResult deinit();
 
     // StbPluginObject interface
 public slots:
     QString getProfileClassId();
-    Profile *createProfile(const QString &id);
-    void initObject(AbstractWebPage *page);
+    SDK::Profile *createProfile(const QString &id);
+    void initObject(SDK::AbstractWebPage *page);
     QString getIcon(const QSize &size);
     QUrl handleUrl(QUrl &url);
     void applyFixes();
-    void resetObjects(AbstractWebPage* page);
+    void resetObjects(SDK::AbstractWebPage* page);
 
 private:
     QString jsFix;

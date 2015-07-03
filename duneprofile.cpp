@@ -14,8 +14,8 @@
 
 using namespace yasem;
 
-DuneProfile::DuneProfile(StbPluginObject *profilePlugin, const QString &id = "") :
-    Profile(profilePlugin, id)
+DuneProfile::DuneProfile(SDK::StbPluginObject *profilePlugin, const QString &id = "") :
+    SDK::Profile(profilePlugin, id)
 {
     Q_ASSERT(profilePlugin);
 
@@ -36,7 +36,7 @@ void DuneProfile::start()
 {
     STUB();
 
-    BrowserPluginObject* browser = m_profile_plugin->browser();
+    SDK::BrowserPluginObject* browser = m_profile_plugin->browser();
     if(!browser)
     {
         WARN() << "MagProfile::start() : browser not found!";
@@ -49,7 +49,7 @@ void DuneProfile::start()
     browser->stb(m_profile_plugin);
 
     QSize portalSize = portalResolutions.value(datasource()->get(GROUP_SYSTEM, "gmode", "1920"));
-    AbstractWebPage* page = m_profile_plugin->browser()->getFirstPage();
+    SDK::AbstractWebPage* page = m_profile_plugin->browser()->getFirstPage();
     page->setPageViewportSize(portalSize);
 
     QString urlString = portal();
@@ -71,32 +71,32 @@ void DuneProfile::initDefaults()
 void DuneProfile::configureKeyMap()
 {
     STUB();
-    BrowserPluginObject* browser = m_profile_plugin->browser();
+    SDK::BrowserPluginObject* browser = m_profile_plugin->browser();
 
     browser->clearKeyEvents();
 
-    browser->registerKeyEvent(RC_KEY_OK,    DuneWebObject::KEY_ENTER);
-    browser->registerKeyEvent(RC_KEY_LEFT,  DuneWebObject::KEY_LEFT);
-    browser->registerKeyEvent(RC_KEY_RIGHT, DuneWebObject::KEY_RIGHT);
-    browser->registerKeyEvent(RC_KEY_UP,    DuneWebObject::KEY_UP);
-    browser->registerKeyEvent(RC_KEY_DOWN,  DuneWebObject::KEY_DOWN);
+    browser->registerKeyEvent(SDK::RC_KEY_OK,    DuneWebObject::KEY_ENTER);
+    browser->registerKeyEvent(SDK::RC_KEY_LEFT,  DuneWebObject::KEY_LEFT);
+    browser->registerKeyEvent(SDK::RC_KEY_RIGHT, DuneWebObject::KEY_RIGHT);
+    browser->registerKeyEvent(SDK::RC_KEY_UP,    DuneWebObject::KEY_UP);
+    browser->registerKeyEvent(SDK::RC_KEY_DOWN,  DuneWebObject::KEY_DOWN);
 
-    browser->registerKeyEvent(RC_KEY_BACK,      DuneWebObject::KEY_RETURN);
-    browser->registerKeyEvent(RC_KEY_PAGE_UP,   DuneWebObject::KEY_PPLUS);
-    browser->registerKeyEvent(RC_KEY_PAGE_DOWN, DuneWebObject::KEY_PMINUS);
+    browser->registerKeyEvent(SDK::RC_KEY_BACK,      DuneWebObject::KEY_RETURN);
+    browser->registerKeyEvent(SDK::RC_KEY_PAGE_UP,   DuneWebObject::KEY_PPLUS);
+    browser->registerKeyEvent(SDK::RC_KEY_PAGE_DOWN, DuneWebObject::KEY_PMINUS);
 
-    browser->registerKeyEvent(RC_KEY_FAST_FORWARD,  DuneWebObject::KEY_FWD);
-    browser->registerKeyEvent(RC_KEY_REWIND,        DuneWebObject::KEY_REW);
-    browser->registerKeyEvent(RC_KEY_STOP,          DuneWebObject::KEY_STOP);
-    browser->registerKeyEvent(RC_KEY_PLAY_PAUSE,    DuneWebObject::KEY_PLAY);
+    browser->registerKeyEvent(SDK::RC_KEY_FAST_FORWARD,  DuneWebObject::KEY_FWD);
+    browser->registerKeyEvent(SDK::RC_KEY_REWIND,        DuneWebObject::KEY_REW);
+    browser->registerKeyEvent(SDK::RC_KEY_STOP,          DuneWebObject::KEY_STOP);
+    browser->registerKeyEvent(SDK::RC_KEY_PLAY_PAUSE,    DuneWebObject::KEY_PLAY);
 
-    browser->registerKeyEvent(RC_KEY_EXIT, DuneWebObject::KEY_RETURN);
-    browser->registerKeyEvent(RC_KEY_MENU, DuneWebObject::KEY_TOP_MENU);
+    browser->registerKeyEvent(SDK::RC_KEY_EXIT, DuneWebObject::KEY_RETURN);
+    browser->registerKeyEvent(SDK::RC_KEY_MENU, DuneWebObject::KEY_TOP_MENU);
 
-    browser->registerKeyEvent(RC_KEY_RED,       DuneWebObject::KEY_A);
-    browser->registerKeyEvent(RC_KEY_GREEN,     DuneWebObject::KEY_B);
-    browser->registerKeyEvent(RC_KEY_YELLOW,    DuneWebObject::KEY_C);
-    browser->registerKeyEvent(RC_KEY_BLUE,      DuneWebObject::KEY_D);
+    browser->registerKeyEvent(SDK::RC_KEY_RED,       DuneWebObject::KEY_A);
+    browser->registerKeyEvent(SDK::RC_KEY_GREEN,     DuneWebObject::KEY_B);
+    browser->registerKeyEvent(SDK::RC_KEY_YELLOW,    DuneWebObject::KEY_C);
+    browser->registerKeyEvent(SDK::RC_KEY_BLUE,      DuneWebObject::KEY_D);
 }
 
 QString DuneProfile::portal()
@@ -109,29 +109,42 @@ void DuneProfile::loadConfigOptions()
     QHash<QString, QString> models;
     models.insert("Dune HD TV-102", "Dune HD TV-102");
 
-    ProfileConfigGroup &main_group = profileConfiguration.groups.first(); //Main group is created by default in profile
+    SDK::ProfileConfigGroup &main_group = profileConfiguration.groups.first(); //Main group is created by default in profile
 
-    main_group.options.append(ConfigOption(DB_TAG_PROFILE, "Model",             tr("STB Model"),            "Dune HD TV-102",       "options", "", models));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, PORTAL_ADDRESS,        tr("Portal URL"),           "http://", "string"));
+    main_group.options.append(SDK::ConfigOption(SDK::DB_TAG_PROFILE, "Model",
+                                                tr("STB Model"),            "Dune HD TV-102",       "options", "", models));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, PORTAL_ADDRESS,
+                                                tr("Portal URL"),           "http://", "string"));
 
     QHash<QString, QString> gmodes;
     gmodes.insert("720", "720x576");
     gmodes.insert("1280", "1280x720");
     gmodes.insert("1920", "1920x1080");
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, "gmode",               tr("Graphical mode"),       "1280",         "options", "", gmodes));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, "gmode",
+                                                tr("Graphical mode"),       "1280",         "options", "", gmodes));
 
     QHash<QString, QString> vmodes;
     vmodes.insert("720p", "720p (HD)");
     vmodes.insert("1080p", "1080p (FullHD)");
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, "vmode",               tr("Video mode"),           "720p",         "options", "", vmodes));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, PRODUCT_ID,            tr("Product ID"),           "tv102", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, FIRMWARE_VERSION,      tr("Firmware version"),     "150227_0032_b9", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, SERIAL_NUMBER,         tr("Serial number"),        "0000-0000-0000-0000-0000-0000-0000-0000", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, MAC_ADDRESS,           tr("MAC address"),          "A0:0A:BF:00:00:00", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS,   tr("Primary MAC address"),  "A0:0A:BF:00:00:00", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, IP_ADDRESS,            tr("IP address"),           "192.168.0.10", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, DNS_1_ADDRESS,         tr("DNS 1 address"),        "8.8.8.8", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, DNS_2_ADDRESS,         tr("DNS 2 address"),        "8.8.4.4", "string"));
-    main_group.options.append(ConfigOption(GROUP_SYSTEM, GATEWAY_ADDRESS,       tr("Gateway"),              "", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, "vmode",
+                                                tr("Video mode"),           "720p",         "options", "", vmodes));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, PRODUCT_ID,
+                                                tr("Product ID"),           "tv102", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, FIRMWARE_VERSION,
+                                                tr("Firmware version"),     "150227_0032_b9", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, SERIAL_NUMBER,
+                                                tr("Serial number"),        "0000-0000-0000-0000-0000-0000-0000-0000", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, MAC_ADDRESS,
+                                                tr("MAC address"),          "A0:0A:BF:00:00:00", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS,
+                                                tr("Primary MAC address"),  "A0:0A:BF:00:00:00", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, IP_ADDRESS,
+                                                tr("IP address"),           "192.168.0.10", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, DNS_1_ADDRESS,
+                                                tr("DNS 1 address"),        "8.8.8.8", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, DNS_2_ADDRESS,
+                                                tr("DNS 2 address"),        "8.8.4.4", "string"));
+    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, GATEWAY_ADDRESS,
+                                                tr("Gateway"),              "", "string"));
 
 }

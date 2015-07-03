@@ -7,11 +7,14 @@
 
 namespace yasem
 {
-class Profile;
 class DuneProfile;
+
+namespace SDK {
+class Profile;
 class AbstractWebPage;
 class MediaPlayerPluginObject;
 class BrowserPluginObject;
+}
 
 class DuneWebObject : public QWidget
 {
@@ -403,7 +406,7 @@ public:
         int endTime;
     };
 
-    explicit DuneWebObject(DuneProfile *profile, AbstractWebPage* page, QWidget *parent = 0);
+    explicit DuneWebObject(DuneProfile *profile, SDK::AbstractWebPage* page, QWidget *parent = 0);
     virtual ~DuneWebObject();
 
     int getTest() { return 10; }
@@ -546,13 +549,13 @@ public slots:
     QString getChannelsDescription(int startIndex, int maxCount);
 
 protected:
-    AbstractWebPage* m_page;
-    BrowserPluginObject* m_browser;
+    SDK::AbstractWebPage* m_page;
+    SDK::BrowserPluginObject* m_browser;
     DuneProfile* m_profile;
-    MediaPlayerPluginObject* m_player;
+    SDK::MediaPlayerPluginObject* m_player;
 
     DuneProfile* profile();
-    MediaPlayerPluginObject* player();
+    SDK::MediaPlayerPluginObject* player();
     QString m_event_callback_string;
 
 };
