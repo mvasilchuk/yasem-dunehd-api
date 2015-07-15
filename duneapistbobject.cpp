@@ -5,9 +5,9 @@
 #include "profilemanager.h"
 #include "dune_enums.h"
 
-#include "mediaplayerpluginobject.h"
-#include "guipluginobject.h"
-#include "browserpluginobject.h"
+#include "mediaplayer.h"
+#include "gui.h"
+#include "browser.h"
 #include "dunescreenobject.h"
 
 #include <QFile>
@@ -31,8 +31,8 @@ SDK::PluginObjectResult DuneApiStbObject::init()
 {
     SDK::StbPluginObject::init();// It's reqired to register profile class id
 
-    player(__get_plugin<SDK::MediaPlayerPluginObject*>(SDK::ROLE_MEDIA));
-    browser(__get_plugin<SDK::BrowserPluginObject*>(SDK::ROLE_BROWSER));
+    player(__get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA));
+    browser(__get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER));
 
     QFile res(QString(":/dunehd/js/dunehd.js"));
     res.open(QIODevice::ReadOnly|QIODevice::Text);
@@ -61,7 +61,7 @@ SDK::Profile *DuneApiStbObject::createProfile(const QString &id)
     return new DuneProfile(this, id);
 }
 
-void DuneApiStbObject::initObject(SDK::AbstractWebPage *page)
+void DuneApiStbObject::initObject(SDK::WebPage *page)
 {
     resetObjects(page);
 }
@@ -82,7 +82,7 @@ void DuneApiStbObject::applyFixes()
     //browser()->evalJs(jsFix);
 }
 
-void DuneApiStbObject::resetObjects(SDK::AbstractWebPage* page)
+void DuneApiStbObject::resetObjects(SDK::WebPage* page)
 {
     STUB();
     DuneProfile* profile = dynamic_cast<DuneProfile*>(SDK::ProfileManager::instance()->getActiveProfile());

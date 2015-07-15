@@ -2,13 +2,13 @@
 #include "pluginmanager.h"
 #include "dune_enums.h"
 
-#include "browserpluginobject.h"
+#include "browser.h"
 #include "datasourceplugin.h"
-#include "mediaplayerpluginobject.h"
+#include "mediaplayer.h"
 #include "dunewebobject.h"
 #include "stbpluginobject.h"
 #include "datasourcepluginobject.h"
-#include "abstractwebpage.h"
+#include "webpage.h"
 
 #include <QDir>
 
@@ -36,7 +36,7 @@ void DuneProfile::start()
 {
     STUB();
 
-    SDK::BrowserPluginObject* browser = m_profile_plugin->browser();
+    SDK::Browser* browser = m_profile_plugin->browser();
     if(!browser)
     {
         WARN() << "MagProfile::start() : browser not found!";
@@ -49,7 +49,7 @@ void DuneProfile::start()
     browser->stb(m_profile_plugin);
 
     QSize portalSize = portalResolutions.value(datasource()->get(GROUP_SYSTEM, "gmode", "1920"));
-    SDK::AbstractWebPage* page = m_profile_plugin->browser()->getFirstPage();
+    SDK::WebPage* page = m_profile_plugin->browser()->getFirstPage();
     page->setPageViewportSize(portalSize);
 
     QString urlString = portal();
@@ -71,7 +71,7 @@ void DuneProfile::initDefaults()
 void DuneProfile::configureKeyMap()
 {
     STUB();
-    SDK::BrowserPluginObject* browser = m_profile_plugin->browser();
+    SDK::Browser* browser = m_profile_plugin->browser();
 
     browser->clearKeyEvents();
 

@@ -7,7 +7,7 @@ namespace yasem {
 
 namespace SDK {
 class Profile;
-class AbstractWebPage;
+class WebPage;
 }
 
 class DuneScreenObject: public QObject
@@ -21,12 +21,12 @@ class DuneScreenObject: public QObject
     Q_PROPERTY(int availHeight READ getHeight USER true)
     Q_PROPERTY(int colorDepth READ getColorDepth USER true)
 public:
-    DuneScreenObject(SDK::Profile* profile, SDK::AbstractWebPage* page);
+    DuneScreenObject(SDK::Profile* profile, SDK::WebPage* page);
     virtual ~DuneScreenObject();
 
 protected:
     SDK::Profile* m_profile;
-    SDK::AbstractWebPage* m_page;
+    SDK::WebPage* m_page;
 
     int width;
     int height;

@@ -6,7 +6,7 @@
 
 using namespace yasem;
 
-DuneScreenObject::DuneScreenObject(SDK::Profile* profile, SDK::AbstractWebPage* page):
+DuneScreenObject::DuneScreenObject(SDK::Profile* profile, SDK::WebPage* page):
     m_profile(profile),
     m_page(page)
 {

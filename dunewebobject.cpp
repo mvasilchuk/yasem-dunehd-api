@@ -5,20 +5,20 @@
 #include "macros.h"
 #include "duneprofile.h"
 #include "pluginmanager.h"
-#include "mediaplayerpluginobject.h"
-#include "browserpluginobject.h"
+#include "mediaplayer.h"
+#include "browser.h"
 #include "datasourcepluginobject.h"
-#include "abstractwebpage.h"
+#include "webpage.h"
 
 using namespace yasem;
 
-DuneWebObject::DuneWebObject(DuneProfile *profile, SDK::AbstractWebPage* page, QWidget *parent):
+DuneWebObject::DuneWebObject(DuneProfile *profile, SDK::WebPage* page, QWidget *parent):
     QWidget(parent),
     m_page(page),
     m_profile(profile)
 {
-    m_player = __get_plugin<SDK::MediaPlayerPluginObject*>(SDK::ROLE_MEDIA);
-    m_browser = __get_plugin<SDK::BrowserPluginObject*>(SDK::ROLE_BROWSER);
+    m_player = __get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA);
+    m_browser = __get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER);
 }
 
 DuneWebObject::~DuneWebObject()
@@ -1321,7 +1321,7 @@ DuneProfile *DuneWebObject::profile()
     return m_profile;
 }
 
-SDK::MediaPlayerPluginObject *DuneWebObject::player()
+SDK::MediaPlayer *DuneWebObject::player()
 {
     return m_player;
 }
@@ -1335,23 +1335,23 @@ int DuneWebObject::setPlaybackEventCallback(const QString &callback)
     m_event_callback_string = QString("(%1)(%2, %3, %4)").arg(callback);
     //STUB() << m_event_callback_string;
 
-    connect(player(), &SDK::MediaPlayerPluginObject::started, [=]() {
+    connect(player(), &SDK::MediaPlayer::started, [=]() {
         QString str = m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_PLAYING).arg(PLAYBACK_EVENT_NO_EVENT);
         m_page->evalJs(str);
         last_state = PLAYBACK_STATE_PLAYING;
     });
 
-    connect(player(), &SDK::MediaPlayerPluginObject::stopped, [=]() {
+    connect(player(), &SDK::MediaPlayer::stopped, [=]() {
         m_page->evalJs(m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_STOPPED).arg(PLAYBACK_EVENT_NO_EVENT));
         last_state = PLAYBACK_STATE_STOPPED;
     });
 
-    connect(player(), &SDK::MediaPlayerPluginObject::paused, [=]() {
+    connect(player(), &SDK::MediaPlayer::paused, [=]() {
         m_page->evalJs(m_event_callback_string.arg(last_state).arg(PLAYBACK_STATE_PAUSED).arg(PLAYBACK_EVENT_NO_EVENT));
         last_state = PLAYBACK_STATE_PAUSED;
     });
 
-    connect(player(), &SDK::MediaPlayerPluginObject::statusChanged, [=](SDK::MediaStatus status) {
+    connect(player(), &SDK::MediaPlayer::statusChanged, [=](SDK::MediaStatus status) {
 
         PlaybackState state;
         PlaybackEvent event = PLAYBACK_EVENT_NO_EVENT;

@@ -27,11 +27,11 @@ public:
 public slots:
     QString getProfileClassId();
     SDK::Profile *createProfile(const QString &id);
-    void initObject(SDK::AbstractWebPage *page);
+    void initObject(SDK::WebPage *page);
     QString getIcon(const QSize &size);
     QUrl handleUrl(QUrl &url);
     void applyFixes();
-    void resetObjects(SDK::AbstractWebPage* page);
+    void resetObjects(SDK::WebPage* page);
 
 private:
     QString jsFix;

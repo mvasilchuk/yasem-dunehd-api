@@ -11,9 +11,9 @@ class DuneProfile;
 
 namespace SDK {
 class Profile;
-class AbstractWebPage;
-class MediaPlayerPluginObject;
-class BrowserPluginObject;
+class WebPage;
+class MediaPlayer;
+class Browser;
 }
 
 class DuneWebObject : public QWidget
@@ -406,7 +406,7 @@ public:
         int endTime;
     };
 
-    explicit DuneWebObject(DuneProfile *profile, SDK::AbstractWebPage* page, QWidget *parent = 0);
+    explicit DuneWebObject(DuneProfile *profile, SDK::WebPage* page, QWidget *parent = 0);
     virtual ~DuneWebObject();
 
     int getTest() { return 10; }
@@ -549,13 +549,13 @@ public slots:
     QString getChannelsDescription(int startIndex, int maxCount);
 
 protected:
-    SDK::AbstractWebPage* m_page;
-    SDK::BrowserPluginObject* m_browser;
+    SDK::WebPage* m_page;
+    SDK::Browser* m_browser;
     DuneProfile* m_profile;
-    SDK::MediaPlayerPluginObject* m_player;
+    SDK::MediaPlayer* m_player;
 
     DuneProfile* profile();
-    SDK::MediaPlayerPluginObject* player();
+    SDK::MediaPlayer* player();
     QString m_event_callback_string;
 
 };
