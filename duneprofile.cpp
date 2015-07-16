@@ -75,28 +75,28 @@ void DuneProfile::configureKeyMap()
 
     browser->clearKeyEvents();
 
-    browser->registerKeyEvent(SDK::RC_KEY_OK,    DuneWebObject::KEY_ENTER);
-    browser->registerKeyEvent(SDK::RC_KEY_LEFT,  DuneWebObject::KEY_LEFT);
-    browser->registerKeyEvent(SDK::RC_KEY_RIGHT, DuneWebObject::KEY_RIGHT);
-    browser->registerKeyEvent(SDK::RC_KEY_UP,    DuneWebObject::KEY_UP);
-    browser->registerKeyEvent(SDK::RC_KEY_DOWN,  DuneWebObject::KEY_DOWN);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_OK,    DuneWebObject::KEY_ENTER);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_LEFT,  DuneWebObject::KEY_LEFT);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_RIGHT, DuneWebObject::KEY_RIGHT);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_UP,    DuneWebObject::KEY_UP);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_DOWN,  DuneWebObject::KEY_DOWN);
 
-    browser->registerKeyEvent(SDK::RC_KEY_BACK,      DuneWebObject::KEY_RETURN);
-    browser->registerKeyEvent(SDK::RC_KEY_PAGE_UP,   DuneWebObject::KEY_PPLUS);
-    browser->registerKeyEvent(SDK::RC_KEY_PAGE_DOWN, DuneWebObject::KEY_PMINUS);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_BACK,      DuneWebObject::KEY_RETURN);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_PAGE_UP,   DuneWebObject::KEY_PPLUS);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_PAGE_DOWN, DuneWebObject::KEY_PMINUS);
 
-    browser->registerKeyEvent(SDK::RC_KEY_FAST_FORWARD,  DuneWebObject::KEY_FWD);
-    browser->registerKeyEvent(SDK::RC_KEY_REWIND,        DuneWebObject::KEY_REW);
-    browser->registerKeyEvent(SDK::RC_KEY_STOP,          DuneWebObject::KEY_STOP);
-    browser->registerKeyEvent(SDK::RC_KEY_PLAY_PAUSE,    DuneWebObject::KEY_PLAY);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_FAST_FORWARD,  DuneWebObject::KEY_FWD);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_REWIND,        DuneWebObject::KEY_REW);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_STOP,          DuneWebObject::KEY_STOP);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_PLAY_PAUSE,    DuneWebObject::KEY_PLAY);
 
-    browser->registerKeyEvent(SDK::RC_KEY_EXIT, DuneWebObject::KEY_RETURN);
-    browser->registerKeyEvent(SDK::RC_KEY_MENU, DuneWebObject::KEY_TOP_MENU);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_EXIT, DuneWebObject::KEY_RETURN);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_MENU, DuneWebObject::KEY_TOP_MENU);
 
-    browser->registerKeyEvent(SDK::RC_KEY_RED,       DuneWebObject::KEY_A);
-    browser->registerKeyEvent(SDK::RC_KEY_GREEN,     DuneWebObject::KEY_B);
-    browser->registerKeyEvent(SDK::RC_KEY_YELLOW,    DuneWebObject::KEY_C);
-    browser->registerKeyEvent(SDK::RC_KEY_BLUE,      DuneWebObject::KEY_D);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_RED,       DuneWebObject::KEY_A);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_GREEN,     DuneWebObject::KEY_B);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_YELLOW,    DuneWebObject::KEY_C);
+    browser->registerKeyEvent(SDK::GUI::RC_KEY_BLUE,      DuneWebObject::KEY_D);
 }
 
 QString DuneProfile::portal()

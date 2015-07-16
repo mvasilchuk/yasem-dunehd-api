@@ -31,8 +31,8 @@ SDK::PluginObjectResult DuneApiStbObject::init()
 {
     SDK::StbPluginObject::init();// It's reqired to register profile class id
 
-    player(__get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA));
-    browser(__get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER));
+    player(SDK::__get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA));
+    browser(SDK::__get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER));
 
     QFile res(QString(":/dunehd/js/dunehd.js"));
     res.open(QIODevice::ReadOnly|QIODevice::Text);

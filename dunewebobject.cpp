@@ -17,8 +17,8 @@ DuneWebObject::DuneWebObject(DuneProfile *profile, SDK::WebPage* page, QWidget *
     m_page(page),
     m_profile(profile)
 {
-    m_player = __get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA);
-    m_browser = __get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER);
+    m_player = SDK::__get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA);
+    m_browser = SDK::__get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER);
 }
 
 DuneWebObject::~DuneWebObject()
