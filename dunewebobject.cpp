@@ -1353,7 +1353,7 @@ int DuneWebObject::setPlaybackEventCallback(const QString &callback)
 
     connect(player(), &SDK::MediaPlayer::statusChanged, [=](SDK::MediaStatus status) {
 
-        PlaybackState state;
+        PlaybackState state = PLAYBACK_STATE_UNDEFINED;
         PlaybackEvent event = PLAYBACK_EVENT_NO_EVENT;
         switch(status)
         {

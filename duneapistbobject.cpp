@@ -22,10 +22,8 @@ DuneApiStbObject::DuneApiStbObject(SDK::Plugin* plugin):
 
 DuneApiStbObject::~DuneApiStbObject()
 {
-
+    STUB();
 }
-
-
 
 SDK::PluginObjectResult DuneApiStbObject::init()
 {
@@ -96,7 +94,7 @@ void DuneApiStbObject::resetObjects(SDK::WebPage* page)
 
     getWebObjects().clear();
 
-    api.insert("screen", new DuneScreenObject(profile, page));
+    api.insert("screen", QSharedPointer<DuneScreenObject>(new DuneScreenObject(profile, page)).data());
 
 
     addWebObject(QString("dunehd_object"), mimeType, QString(""), QString("DuneHD API"), [=](){

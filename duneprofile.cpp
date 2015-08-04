@@ -73,8 +73,6 @@ void DuneProfile::configureKeyMap()
     STUB();
     SDK::Browser* browser = m_profile_plugin->browser();
 
-    browser->clearKeyEvents();
-
     browser->registerKeyEvent(SDK::GUI::RC_KEY_OK,    DuneWebObject::KEY_ENTER);
     browser->registerKeyEvent(SDK::GUI::RC_KEY_LEFT,  DuneWebObject::KEY_LEFT);
     browser->registerKeyEvent(SDK::GUI::RC_KEY_RIGHT, DuneWebObject::KEY_RIGHT);
@@ -111,40 +109,40 @@ void DuneProfile::loadConfigOptions()
 
     SDK::ProfileConfigGroup &main_group = profileConfiguration.groups.first(); //Main group is created by default in profile
 
-    main_group.options.append(SDK::ConfigOption(SDK::DB_TAG_PROFILE, "Model",
+    main_group.m_options.append(SDK::ConfigOption(SDK::DB_TAG_PROFILE, "Model",
                                                 tr("STB Model"),            "Dune HD TV-102",       "options", "", models));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, PORTAL_ADDRESS,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, PORTAL_ADDRESS,
                                                 tr("Portal URL"),           "http://", "string"));
 
     QHash<QString, QString> gmodes;
     gmodes.insert("720", "720x576");
     gmodes.insert("1280", "1280x720");
     gmodes.insert("1920", "1920x1080");
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, "gmode",
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, "gmode",
                                                 tr("Graphical mode"),       "1280",         "options", "", gmodes));
 
     QHash<QString, QString> vmodes;
     vmodes.insert("720p", "720p (HD)");
     vmodes.insert("1080p", "1080p (FullHD)");
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, "vmode",
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, "vmode",
                                                 tr("Video mode"),           "720p",         "options", "", vmodes));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, PRODUCT_ID,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, PRODUCT_ID,
                                                 tr("Product ID"),           "tv102", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, FIRMWARE_VERSION,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, FIRMWARE_VERSION,
                                                 tr("Firmware version"),     "150227_0032_b9", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, SERIAL_NUMBER,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, SERIAL_NUMBER,
                                                 tr("Serial number"),        "0000-0000-0000-0000-0000-0000-0000-0000", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, MAC_ADDRESS,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, MAC_ADDRESS,
                                                 tr("MAC address"),          "A0:0A:BF:00:00:00", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, PRIMARY_MAC_ADDRESS,
                                                 tr("Primary MAC address"),  "A0:0A:BF:00:00:00", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, IP_ADDRESS,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, IP_ADDRESS,
                                                 tr("IP address"),           "192.168.0.10", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, DNS_1_ADDRESS,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, DNS_1_ADDRESS,
                                                 tr("DNS 1 address"),        "8.8.8.8", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, DNS_2_ADDRESS,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, DNS_2_ADDRESS,
                                                 tr("DNS 2 address"),        "8.8.4.4", "string"));
-    main_group.options.append(SDK::ConfigOption(GROUP_SYSTEM, GATEWAY_ADDRESS,
+    main_group.m_options.append(SDK::ConfigOption(GROUP_SYSTEM, GATEWAY_ADDRESS,
                                                 tr("Gateway"),              "", "string"));
 
 }
