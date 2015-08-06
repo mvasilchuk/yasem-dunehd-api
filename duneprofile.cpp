@@ -3,18 +3,18 @@
 #include "dune_enums.h"
 
 #include "browser.h"
-#include "datasourceplugin.h"
+#include "datasourcefactory.h"
 #include "mediaplayer.h"
 #include "dunewebobject.h"
 #include "stbpluginobject.h"
-#include "datasourcepluginobject.h"
 #include "webpage.h"
+#include "datasource.h"
 
 #include <QDir>
 
 using namespace yasem;
 
-DuneProfile::DuneProfile(SDK::StbPluginObject *profilePlugin, const QString &id = "") :
+DuneProfile::DuneProfile(SDK::StbPluginObject* profilePlugin, const QString &id = "") :
     SDK::Profile(profilePlugin, id)
 {
     Q_ASSERT(profilePlugin);
@@ -30,6 +30,11 @@ DuneProfile::DuneProfile(SDK::StbPluginObject *profilePlugin, const QString &id 
     videoResolutions.insert("1080p", QSize(1920, 1080));
 
     loadConfigOptions();
+}
+
+DuneProfile::~DuneProfile()
+{
+    STUB();
 }
 
 void DuneProfile::start()

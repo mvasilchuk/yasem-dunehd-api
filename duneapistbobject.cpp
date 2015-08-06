@@ -29,9 +29,6 @@ SDK::PluginObjectResult DuneApiStbObject::init()
 {
     SDK::StbPluginObject::init();// It's reqired to register profile class id
 
-    player(SDK::__get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA));
-    browser(SDK::__get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER));
-
     QFile res(QString(":/dunehd/js/dunehd.js"));
     res.open(QIODevice::ReadOnly|QIODevice::Text);
     jsFix = res.readAll();
@@ -53,7 +50,7 @@ QString DuneApiStbObject::getProfileClassId()
     return "dunehd";
 }
 
-SDK::Profile *DuneApiStbObject::createProfile(const QString &id)
+SDK::Profile* DuneApiStbObject::createProfile(const QString &id)
 {
     STUB();
     return new DuneProfile(this, id);
@@ -83,7 +80,7 @@ void DuneApiStbObject::applyFixes()
 void DuneApiStbObject::resetObjects(SDK::WebPage* page)
 {
     STUB();
-    DuneProfile* profile = dynamic_cast<DuneProfile*>(SDK::ProfileManager::instance()->getActiveProfile());
+    QSharedPointer<DuneProfile> profile = qSharedPointerCast<DuneProfile>(SDK::ProfileManager::instance()->getActiveProfile());
 
     QHash<QString, QObject*>& api = getApi();
     api.clear();
@@ -94,11 +91,11 @@ void DuneApiStbObject::resetObjects(SDK::WebPage* page)
 
     getWebObjects().clear();
 
-    api.insert("screen", QSharedPointer<DuneScreenObject>(new DuneScreenObject(profile, page)).data());
+    api.insert("screen", new DuneScreenObject(profile.data(), page));
 
 
-    addWebObject(QString("dunehd_object"), mimeType, QString(""), QString("DuneHD API"), [=](){
-        return new DuneWebObject(profile, page);
+    addWebObject(QString("dunehd_object"), mimeType, QString(""), QString("DuneHD API"), [=, &profile](){
+        return new DuneWebObject(profile.data(), page);
     });
 
     qDebug() << "---------------------------------------------------------------";

@@ -552,9 +552,7 @@ public slots:
 
 protected:
     SDK::WebPage* m_page;
-    SDK::Browser* m_browser;
     DuneProfile* m_profile;
-    SDK::MediaPlayer* m_player;
 
     DuneProfile* profile();
     SDK::MediaPlayer* player();

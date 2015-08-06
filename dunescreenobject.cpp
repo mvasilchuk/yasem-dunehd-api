@@ -1,6 +1,6 @@
 #include "dunescreenobject.h"
 #include "stbprofile.h"
-#include "datasourcepluginobject.h"
+#include "datasource.h"
 
 #include "dune_enums.h"
 
@@ -10,7 +10,7 @@ DuneScreenObject::DuneScreenObject(SDK::Profile* profile, SDK::WebPage* page):
     m_profile(profile),
     m_page(page)
 {
-    SDK::DatasourcePluginObject* ds = profile->datasource();
+    SDK::Datasource* ds = profile->datasource();
 
     QString gmode = ds->get(GROUP_SYSTEM, "gmode", "1280");
 

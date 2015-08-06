@@ -7,7 +7,7 @@
 #include "pluginmanager.h"
 #include "mediaplayer.h"
 #include "browser.h"
-#include "datasourcepluginobject.h"
+#include "datasource.h"
 #include "webpage.h"
 
 using namespace yasem;
@@ -17,8 +17,6 @@ DuneWebObject::DuneWebObject(DuneProfile *profile, SDK::WebPage* page, QWidget *
     m_page(page),
     m_profile(profile)
 {
-    m_player = SDK::__get_plugin<SDK::MediaPlayer*>(SDK::ROLE_MEDIA);
-    m_browser = SDK::__get_plugin<SDK::Browser*>(SDK::ROLE_BROWSER);
 }
 
 DuneWebObject::~DuneWebObject()
@@ -1316,14 +1314,14 @@ QString DuneWebObject::getChannelsDescription(int startIndex, int maxCount)
     return "[]";
 }
 
-DuneProfile *DuneWebObject::profile()
+DuneProfile* DuneWebObject::profile()
 {
     return m_profile;
 }
 
-SDK::MediaPlayer *DuneWebObject::player()
+SDK::MediaPlayer* DuneWebObject::player()
 {
-    return m_player;
+    return SDK::MediaPlayer::instance();
 }
 
 // ----------------------------- States and events

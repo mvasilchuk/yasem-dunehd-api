@@ -12,8 +12,8 @@ class DuneProfile : public QObject, public SDK::Profile
 {
     Q_OBJECT
 public:
-    explicit DuneProfile(SDK::StbPluginObject *profilePlugin, const QString &id);
-
+    explicit DuneProfile(SDK::StbPluginObject* profilePlugin, const QString &id);
+    virtual ~DuneProfile();
 signals:
 
 public slots:
