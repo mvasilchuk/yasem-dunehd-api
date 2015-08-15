@@ -41,7 +41,7 @@ void DuneProfile::start()
 {
     STUB();
 
-    SDK::Browser* browser = m_profile_plugin->browser();
+    SDK::Browser* browser = SDK::Browser::instance();
     if(!browser)
     {
         WARN() << "MagProfile::start() : browser not found!";
@@ -54,7 +54,7 @@ void DuneProfile::start()
     browser->stb(m_profile_plugin);
 
     QSize portalSize = portalResolutions.value(datasource()->get(GROUP_SYSTEM, "gmode", "1920"));
-    SDK::WebPage* page = m_profile_plugin->browser()->getFirstPage();
+    SDK::WebPage* page = SDK::Browser::instance()->getFirstPage();
     page->setPageViewportSize(portalSize);
 
     QString urlString = portal();
@@ -76,7 +76,7 @@ void DuneProfile::initDefaults()
 void DuneProfile::configureKeyMap()
 {
     STUB();
-    SDK::Browser* browser = m_profile_plugin->browser();
+    SDK::Browser* browser = SDK::Browser::instance();
 
     browser->registerKeyEvent(SDK::GUI::RC_KEY_OK,    DuneWebObject::KEY_ENTER);
     browser->registerKeyEvent(SDK::GUI::RC_KEY_LEFT,  DuneWebObject::KEY_LEFT);
