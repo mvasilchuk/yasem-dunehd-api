@@ -54,7 +54,7 @@ void DuneProfile::start()
     browser->stb(m_profile_plugin);
 
     QSize portalSize = portalResolutions.value(datasource()->get(GROUP_SYSTEM, "gmode", "1920"));
-    SDK::WebPage* page = SDK::Browser::instance()->getFirstPage();
+    SDK::WebPage* page = SDK::Browser::instance()->getMainWebPage();
     page->setPageViewportSize(portalSize);
 
     QString urlString = portal();
