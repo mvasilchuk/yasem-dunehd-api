@@ -94,7 +94,7 @@ void DuneApiStbObject::resetObjects(SDK::WebPage* page)
     api.insert("screen", new DuneScreenObject(profile, page));
 
 
-    addWebObject(QString("dunehd_object"), mimeType, QString(""), QString("DuneHD API"), [=, &profile](){
+    addWebObject(QString("dunehd_object"), mimeType, QString(""), QString("DuneHD API"), [=](){
         return new DuneWebObject(profile, page);
     });
 
